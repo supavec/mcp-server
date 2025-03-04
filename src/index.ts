@@ -21,14 +21,17 @@ const SUPAVEC_BASE_URL = process.env.SUPAVEC_BASE_URL || "";
 const apiKey = process.env.SUPAVEC_API_KEY || "";
 
 async function makeSupavecRequest<T>(
-  url: string
+  url: string,
+  body: object
 ): Promise<T | { error: string }> {
   try {
     const response = await fetch(url, {
+      method: "POST",
       headers: {
         authorization: apiKey,
         "Content-Type": "application/json",
       },
+      body: JSON.stringify(body),
     });
     if (!response.ok) {
       return {
@@ -36,7 +39,8 @@ async function makeSupavecRequest<T>(
       };
     }
 
-    return (await response.arrayBuffer()) as T;
+    const data = await response.json();
+    return data as T;
   } catch (error) {
     return {
       error: `Failed to fetch data: ${error}`,
@@ -68,10 +72,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "fetch-embeddings") {
     const file_id = request.params.arguments?.file_id as string;
-    const embeddingsUrl = `${SUPAVEC_BASE_URL}/embeddings?file_id=${encodeURIComponent(
-      file_id
-    )}`;
-    const embeddings = await makeSupavecRequest<ArrayBuffer>(embeddingsUrl);
+    const embeddingsUrl = `${SUPAVEC_BASE_URL}/embeddings`;
+    const embeddings = await makeSupavecRequest<any>(embeddingsUrl, {
+      file_id: [file_id],
+    });
 
     if ("error" in embeddings) {
       return {
@@ -89,7 +93,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         {
           type: "text",
           mimeType: "application/json",
-          text: JSON.stringify(embeddings),
+          text: JSON.stringify(embeddings, null, 2),
         },
       ],
     };
