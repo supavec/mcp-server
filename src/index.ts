@@ -5,6 +5,12 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 
+type EMBEDDINGS = {
+  documents: {
+    content: string;
+  }[];
+};
+
 const server = new Server(
   {
     name: "supavec",
@@ -53,7 +59,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
     tools: [
       {
         name: "fetch-embeddings",
-        description: "Fetch embeddings for a file by ID",
+        description: "Fetch embeddings for a file by ID and query",
         inputSchema: {
           type: "object",
           properties: {
@@ -61,8 +67,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
               type: "string",
               description: "ID of the file to get embeddings for",
             },
+            query: {
+              type: "string",
+              description: "Query to search for in the file",
+            },
           },
-          required: ["file_id"],
+          required: ["file_id", "query"],
         },
       },
     ],
@@ -72,9 +82,11 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "fetch-embeddings") {
     const file_id = request.params.arguments?.file_id as string;
+    const query = request.params.arguments?.query as string;
     const embeddingsUrl = `${SUPAVEC_BASE_URL}/embeddings`;
-    const embeddings = await makeSupavecRequest<any>(embeddingsUrl, {
-      file_id: [file_id],
+    const embeddings = await makeSupavecRequest<EMBEDDINGS>(embeddingsUrl, {
+      file_ids: [file_id],
+      query: query,
     });
 
     if ("error" in embeddings) {
@@ -93,7 +105,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         {
           type: "text",
           mimeType: "application/json",
-          text: JSON.stringify(embeddings, null, 2),
+          text: JSON.stringify(
+            embeddings.documents.map((d) => d.content).join("\n"),
+            null,
+            2
+          ),
         },
       ],
     };
