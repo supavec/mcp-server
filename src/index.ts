@@ -17,7 +17,7 @@ const server = new Server(
   }
 );
 
-const SUPAVEC_BASE_URL = process.env.SUPAVEC_BASE_URL || "";
+const SUPAVEC_BASE_URL = "https://api.supavec.com";
 const apiKey = process.env.SUPAVEC_API_KEY || "";
 
 async function makeSupavecRequest<T>(
