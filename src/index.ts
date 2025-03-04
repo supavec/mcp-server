@@ -24,22 +24,26 @@ async function makeSupavecRequest<T>(
   url: string
 ): Promise<T | { error: string }> {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        authorization: apiKey,
+        "Content-Type": "application/json",
+      },
+    });
     if (!response.ok) {
       return {
-        error: `Failed to render a screenshot status: ${response.status}`,
+        error: `Failed to fetch data: status ${response.status}`,
       };
     }
 
     return (await response.arrayBuffer()) as T;
   } catch (error) {
     return {
-      error: `Failed to render a screenshot: ${error}`,
+      error: `Failed to fetch data: ${error}`,
     };
   }
 }
 
-// Define available tools
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
     tools: [
@@ -61,7 +65,6 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-// Handle tool execution
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (request.params.name === "fetch-embeddings") {
     const file_id = request.params.arguments?.file_id as string;
