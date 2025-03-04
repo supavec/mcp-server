@@ -1,70 +1,51 @@
-# supavec MCP Server
+# Supavec MCP Server
 
-Fetch relevant content from Supavec
+Fetch relevant content from Supavec.
 
-This is a TypeScript-based MCP server that implements a simple notes system. It demonstrates core MCP concepts by providing:
+An official implementation of an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for [Supavec](https://www.supavec.com).
 
-- Resources representing text notes with URIs and metadata
-- Tools for creating new notes
-- Prompts for generating summaries of notes
+## Tools
 
-## Features
+-   `fetch-embeddings`: Fetch relevant embeddings and content from Supavec
 
-### Resources
-- List and access notes via `note://` URIs
-- Each note has a title, content and metadata
-- Plain text mime type for simple content access
+## Usage
 
-### Tools
-- `create_note` - Create new text notes
-  - Takes title and content as required parameters
-  - Stores note in server state
+### Build it
 
-### Prompts
-- `summarize_notes` - Generate a summary of all stored notes
-  - Includes all note contents as embedded resources
-  - Returns structured prompt for LLM summarization
+Always install dependencies and build it first:
 
-## Development
-
-Install dependencies:
 ```bash
-npm install
+npm run install && npm run build
 ```
 
-Build the server:
-```bash
-npm run build
-```
+### Get your Supavec API key
 
-For development with auto-rebuild:
-```bash
-npm run watch
-```
+Sign up at [Supavec](https://www.supavec.com) and get your API key.
 
-## Installation
+### With Claude for Desktop
 
-To use with Claude Desktop, add the server config:
-
-On MacOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
+Add the following to your `~/Library/Application\ Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
-  "mcpServers": {
-    "supavec": {
-      "command": "/path/to/supavec/build/index.js"
+    "mcpServers": {
+        "supavec": {
+            "command": "node",
+            "args": ["path/to/supavec/mcp/build/index.js"],
+            "env": {
+                "SUPAVEC_API_KEY": "<your api key>"
+            }
+        }
     }
-  }
 }
 ```
 
-### Debugging
-
-Since MCP servers communicate over stdio, debugging can be challenging. We recommend using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector), which is available as a package script:
+### Standalone or for other projects
 
 ```bash
-npm run inspector
+SUPAVEC_API_KEY=your_api_key && node build/index.js
 ```
 
-The Inspector will provide a URL to access debugging tools in your browser.
+## License
+
+`Supavec MCP Server` is licensed [under the MIT License](LICENSE).
