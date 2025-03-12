@@ -4,6 +4,10 @@ Fetch relevant content from Supavec.
 
 An official implementation of an [MCP (Model Context Protocol)](https://modelcontextprotocol.io/) server for [Supavec](https://www.supavec.com).
 
+<a href="https://glama.ai/mcp/servers/nkt7wcy8ez">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/nkt7wcy8ez/badge" alt="Supavec Server MCP server" />
+</a>
+
 ## Tools
 
 -   `fetch-embeddings`: Fetch relevant embeddings and content from Supavec
