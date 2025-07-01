@@ -72,6 +72,17 @@ if (shouldShowHelp) {
   process.exit(0);
 }
 
+const apiKey = cmdApiKey || process.env.SUPAVEC_API_KEY || "";
+
+if (!apiKey) {
+  console.error("Error: Supavec API key is required");
+  console.error(
+    "Provide it via --api-key argument or SUPAVEC_API_KEY environment variable"
+  );
+  console.error("Use --help for more information");
+  process.exit(1);
+}
+
 const server = new Server(
   {
     name: "supavec",
@@ -85,7 +96,6 @@ const server = new Server(
 );
 
 const SUPAVEC_BASE_URL = "https://api.supavec.com";
-const apiKey = process.env.SUPAVEC_API_KEY || "";
 
 async function makeSupavecRequest<T>(
   url: string,
