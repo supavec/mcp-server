@@ -206,7 +206,7 @@ DEBUG=1 supavec-mcp --api-key your_key
 ### Setup
 
 ```bash
-git clone https://github.com/your-org/supavec-mcp-server.git
+git clone https://github.com/supavec/mcp-server.git
 cd supavec-mcp-server
 npm install
 npm run build
@@ -239,7 +239,7 @@ MIT License - see [LICENSE](LICENSE) for details.
 ## Support
 
 - 📚 [Supavec Documentation](https://supavec.com/docs)
-- 🐛 [Report Issues](https://github.com/your-org/supavec-mcp-server/issues)
+- 🐛 [Report Issues](https://github.com/supavec/mcp-server/issues)
 - 💬 [Community Support](https://supavec.com/community)
 
 ## Related

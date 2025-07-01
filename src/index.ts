@@ -50,7 +50,7 @@ function showHelp() {
 Supavec MCP Server
 
 USAGE:
-  supavec [OPTIONS]
+  supavec-mcp [OPTIONS]
 
 OPTIONS:
   --api-key <key>    Supavec API key (required)
@@ -60,8 +60,8 @@ ENVIRONMENT VARIABLES:
   SUPAVEC_API_KEY    Supavec API key (overridden by --api-key)
 
 EXAMPLES:
-  supavec --api-key your_api_key_here
-  SUPAVEC_API_KEY=your_key supavec
+  supavec-mcp --api-key your_api_key_here
+  SUPAVEC_API_KEY=your_key supavec-mcp
 
 For more information, visit: https://www.supavec.com
 `);
