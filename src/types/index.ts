@@ -1,4 +1,4 @@
-export type EMBEDDINGS = {
+export type Embeddings = {
   documents: {
     content: string;
   }[];
