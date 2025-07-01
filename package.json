@@ -4,7 +4,7 @@
   "description": "A Model Context Protocol (MCP) server for Supavec that enables AI assistants to fetch relevant embeddings and content",
   "type": "module",
   "bin": {
-    "supavec-mcp": "./build/index.js"
+    "supavec-mcp": "build/index.js"
   },
   "files": [
     "build"
@@ -30,10 +30,10 @@
     "url": "https://www.supavec.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/supavec/mcp-server", 
+  "homepage": "https://github.com/supavec/mcp-server",
   "repository": {
     "type": "git",
-    "url": "git@github.com:supavec/mcp-server.git"
+    "url": "git+ssh://git@github.com/supavec/mcp-server.git"
   },
   "bugs": {
     "url": "https://github.com/supavec/mcp-server/issues"
