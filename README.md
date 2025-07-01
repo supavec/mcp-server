@@ -139,6 +139,26 @@ Fetch embeddings for a file by ID and query.
 Ask your AI assistant: "Using Supavec, find information about 'authentication' in file abc123"
 ```
 
+### `list-user-files`
+
+List all files uploaded to Supavec for the current user.
+
+**Parameters:**
+- `limit` (number, optional): Number of files to fetch (default: 10)
+- `offset` (number, optional): Offset for pagination (default: 0)  
+- `order_dir` (string, optional): Order direction for results - "asc" or "desc" (default: "desc")
+
+**Example:**
+```
+Ask your AI assistant: "List my Supavec files" or "Show me the first 20 files from my Supavec account"
+```
+
+**Response includes:**
+- File ID and name
+- File type and creation date
+- Team ID
+- Pagination information
+
 ## Command Line Usage
 
 ### Help
