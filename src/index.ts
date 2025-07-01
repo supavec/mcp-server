@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
@@ -10,6 +12,78 @@ type EMBEDDINGS = {
     content: string;
   }[];
 };
+
+function parseArgs(): { apiKey: string; showHelp: boolean } {
+  const args = process.argv.slice(2);
+  let apiKey = "";
+  let showHelp = false;
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    if (arg === "--help" || arg === "-h") {
+      showHelp = true;
+    } else if (arg === "--api-key") {
+      if (i + 1 < args.length) {
+        apiKey = args[i + 1];
+        i++;
+      } else {
+        console.error("Error: --api-key requires a value");
+        process.exit(1);
+      }
+    } else if (arg.startsWith("--api-key=")) {
+      apiKey = arg.split("=")[1];
+    } else if (!arg.startsWith("-")) {
+      continue;
+    } else {
+      console.error(`Error: Unknown argument: ${arg}`);
+      console.error("Use --help for usage information");
+      process.exit(1);
+    }
+  }
+
+  return { apiKey, showHelp };
+}
+
+function showHelp() {
+  console.log(`
+Supavec MCP Server
+
+USAGE:
+  supavec-mcp [OPTIONS]
+
+OPTIONS:
+  --api-key <key>    Supavec API key (required)
+  --help, -h         Show this help message
+
+ENVIRONMENT VARIABLES:
+  SUPAVEC_API_KEY    Supavec API key (overridden by --api-key)
+
+EXAMPLES:
+  supavec-mcp --api-key your_api_key_here
+  SUPAVEC_API_KEY=your_key supavec-mcp
+
+For more information, visit: https://www.supavec.com
+`);
+}
+
+const { apiKey: cmdApiKey, showHelp: shouldShowHelp } = parseArgs();
+
+if (shouldShowHelp) {
+  showHelp();
+  process.exit(0);
+}
+
+const apiKey = cmdApiKey || process.env.SUPAVEC_API_KEY || "";
+
+if (!apiKey) {
+  console.error("Error: Supavec API key is required");
+  console.error(
+    "Provide it via --api-key argument or SUPAVEC_API_KEY environment variable"
+  );
+  console.error("Use --help for more information");
+  process.exit(1);
+}
 
 const server = new Server(
   {
@@ -24,7 +98,6 @@ const server = new Server(
 );
 
 const SUPAVEC_BASE_URL = "https://api.supavec.com";
-const apiKey = process.env.SUPAVEC_API_KEY || "";
 
 async function makeSupavecRequest<T>(
   url: string,
