@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.2] - 2025-01-27
+## [0.2.0] - 2025-07-01
+
+### Added
+- 🆕 **New Tool: `list-user-files`** - List all files uploaded to Supavec for the current user
+- 📋 **File Management**: Easily discover and manage your Supavec documents
+- 🔍 **Pagination Support**: Control the number of files returned with limit/offset parameters
+- 📊 **Sorting Options**: Order results by ascending or descending order
+- 📋 **Detailed File Information**: Get file ID, name, type, creation date, and team information
+
+### Features
+- Enhanced discoverability of user documents
+- Better integration with AI workflows for document management
+- Comprehensive file metadata retrieval
+- Flexible pagination for large document collections
+
+## [0.1.2] - 2025-07-01
 
 ### Changed
 - 🏗️ **Major code refactoring** - Improved code organization and maintainability
@@ -47,7 +62,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
-- Ability to list your documents
 - Upload the documents to your supavec project
 - Batch processing for multiple files
 - Performance optimizations
