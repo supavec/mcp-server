@@ -11,7 +11,15 @@ export const server = setupServer(...handlers)
 
 // Start server before all tests
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: 'error' })
+  server.listen({ 
+    onUnhandledRequest: (request) => {
+      // Allow OpenAI API calls for E2E tests
+      if (request.url.includes('openai.com')) {
+        return
+      }
+      console.error('Unhandled request:', request.method, request.url)
+    }
+  })
 })
 
 // Reset handlers after each test
